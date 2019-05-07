@@ -54,7 +54,11 @@ public class Hashtable<k,v> {
         HashNode[] temp = new HashNode[slots.length*2];
         for(int i = 0; i < slots.length; i++){
             HashNode node = slots[i];
+
             if(node != null) {
+                HashNode next = node.getNext();
+                node.setNext(null);
+
                 int slot = node.getKey().hashCode();
                 slot = slot % temp.length;
                 slot = Math.abs(slot);
@@ -66,8 +70,11 @@ public class Hashtable<k,v> {
                 }else{
                     temp[slot] = node;
                 }
-                while(node.getNext() != null){
-                    node = node.getNext();
+                while(next != null){
+                    node = next;
+                    next = node.getNext();
+                    node.setNext(null);
+
                     slot = node.getKey().hashCode();
                     slot = slot % temp.length;
                     slot = Math.abs(slot);

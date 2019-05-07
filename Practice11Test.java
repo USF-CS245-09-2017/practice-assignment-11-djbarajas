@@ -109,9 +109,7 @@ public class Practice11Test {
 		boolean success = true;
 		long start = 0;
 		long end = 0;
-		
 		Hashtable hashtable = new Hashtable();
-		
 		try {
 		    reader = new BufferedReader(new FileReader(file));
 		    String text = null;
