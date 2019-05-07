@@ -1,16 +1,21 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Hashtable<k,v> {
     private HashNode<k,v>[] slots;
     private int num_items;
     private final double lambda = 0.75;
-
+    /*
+    *Hashtable()
+    * creates a new hashtable with no items of a large size
+    * NOTE: this implementation uses separate chaining
+     */
     public Hashtable(){
         slots = new HashNode[2027];
         num_items = 0;
     }
-
+    /*
+    * containsKey()
+    * calls the get function to see if the key exists
+     */
     boolean containsKey(String key){
         String found = get(key);
         if(found == null)
@@ -18,7 +23,11 @@ public class Hashtable<k,v> {
         else
             return true;
     }
-
+    /*
+    * get()
+    * uses the hash function to get the correct bucket that the node is in
+    * and sees if the string matches any node in that bucket
+     */
     String get(String key){
         int slot = getSlot(key);
         HashNode node = slots[slot];
@@ -30,7 +39,10 @@ public class Hashtable<k,v> {
         else
             return null;
     }
-
+    /*
+    *put()
+    * hashes the key to put in the correct bucket in the array
+     */
     void put(String key, String value){
         HashNode newnode = new HashNode(key,value);
         int hash = getSlot(key);
@@ -49,7 +61,13 @@ public class Hashtable<k,v> {
         if( needGrowth >= lambda)
             this.grow();
     }
-
+    /*
+    * grow()
+    * creates a new array double the size of the original
+    * then it loops through every element in the old one
+    * finding all the nodes and rehashing them in the new array
+    * then putting them in the new array at the new positions
+     */
     private void grow() {
         HashNode[] temp = new HashNode[slots.length*2];
         for(int i = 0; i < slots.length; i++){
@@ -92,7 +110,12 @@ public class Hashtable<k,v> {
         slots = temp;
     }
 
-
+    /*
+    * remove()
+    * gets the node to remove and if the node has a next
+    * value then it sets the previous to the remove's next
+    * finally it returns the value
+     */
     String remove(String key){
         int slot = getSlot(key);
         String val;
@@ -113,7 +136,10 @@ public class Hashtable<k,v> {
         num_items--;
         return val;
     }
-
+    /*
+    *getSlot()
+    * this is my hash function for how i get the correct slot
+     */
     private int getSlot(String key){
         int slot = key.hashCode();
         slot = slot % slots.length;
