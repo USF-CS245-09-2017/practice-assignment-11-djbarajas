@@ -3,7 +3,8 @@ public class HashNode<String,Object> {
     private String value;
     private HashNode<String,String> next;
     /*
-    getters and setters
+    basic node class with key value pairs with
+    accessors and mutators
      */
     public HashNode(String key,String data){
         this.key = key;
